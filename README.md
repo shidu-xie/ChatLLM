@@ -11,3 +11,15 @@ pip install langchain_community -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install Crypto -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install  pycryptodome -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+* 配置服务器
+  * 操作系统 阿里云CentOS 7.9 64位 SCC版
+  * 开放服务器端口 新建安全组
+  * 安装anaconda https://blog.csdn.net/wyf2017/article/details/118676765
+  * 安装Crypto https://blog.csdn.net/xiaojin21cen/article/details/109642940
+
+
+* 配置redis
+  * windows https://blog.csdn.net/qq_45938544/article/details/131088850
+  * linux https://blog.csdn.net/m0_51285952/article/details/123423799
+
+
