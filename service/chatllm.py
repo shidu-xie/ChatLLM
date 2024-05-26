@@ -15,5 +15,5 @@ app.include_router(qywechat, prefix="", tags=["企业微信接口", ])
 
 
 if __name__ == '__main__':
-    uvicorn.run("chatllm:app", host="0.0.0.0", port=7777, reload=True)
+    uvicorn.run("chatllm:app", host="0.0.0.0", port=16666, reload=True)
 

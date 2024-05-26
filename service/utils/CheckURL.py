@@ -53,14 +53,10 @@ def check_msg_signature(msg_signature,token,timestamp,nonce,echostr):
     else:
         return False
 
-def checkURL(request):
+def checkURL(msg_signature, timestamp, nonce, echostr):
     EncodingAESKey = ENCODINGAESKEY
     token = TOKEN
 
-    msg_signature = request.args.to_dict().get("msg_signature")
-    timestamp = request.args.to_dict().get("timestamp")
-    nonce = request.args.to_dict().get("nonce")
-    echostr = request.args.to_dict().get("echostr")
     # 获取消息体签名校验结果
     check_result = check_msg_signature(msg_signature, token, timestamp, nonce, echostr)
     if check_result:
