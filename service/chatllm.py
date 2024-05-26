@@ -2,12 +2,16 @@ from typing import Union
 
 from fastapi import FastAPI
 import uvicorn
+import sys
+SERVICE_PATH = "/root/ChatLLM"
+# SERVICE_PATH = "D:\projects\ChatLLM\ChatLLM"
+sys.path.append(SERVICE_PATH)
+from service.server.qywechat import qywechat
 
-from server import qywx
 
 app = FastAPI()
 
-app.include_router(qywx, prefix="", tags=["企业微信接口", ])
+app.include_router(qywechat, prefix="", tags=["企业微信接口", ])
 
 
 if __name__ == '__main__':
