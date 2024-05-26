@@ -59,12 +59,9 @@ def checkURL(msg_signature, timestamp, nonce, echostr):
 
     # 获取消息体签名校验结果
     check_result = check_msg_signature(msg_signature, token, timestamp, nonce, echostr)
-    print(check_result)
     if check_result:
         decrypt_result = msg_base64_decrypt(echostr, EncodingAESKey)
-        print(decrypt_result)
-        print("通过")
-        return decrypt_result
+        return int(decrypt_result)
     else:
         return ""
 
