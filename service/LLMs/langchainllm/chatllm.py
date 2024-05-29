@@ -27,7 +27,7 @@ AI Assistant:"""
     def reply(self, userid, content):
 
         message_history = RedisChatMessageHistory(
-            url="redis://localhost:6379/0", ttl=600, session_id='test'
+            url="redis://localhost:6379/0", ttl=600, session_id=f'{userid}_chat'
         )
         memory = ConversationBufferWindowMemory(
             memory_key="chat_history", chat_memory=message_history, k=5, ai_prefix="AI Assistant", human_prefix="Friend"

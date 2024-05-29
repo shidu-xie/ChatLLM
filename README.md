@@ -4,6 +4,7 @@
 * 安装所需的库
 ```commandline
 pip install langchain -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install langchain_openai -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install fastapi -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install zhipuai -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install redis -i https://pypi.tuna.tsinghua.edu.cn/simple
@@ -11,6 +12,7 @@ pip install langchain_community -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install Crypto -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install  pycryptodome -i https://pypi.tuna.tsinghua.edu.cn/simple
 pip install  openai -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install  requests_toolbelt -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 * 配置服务器
   * 操作系统 阿里云CentOS 7.9 64位 SCC版
