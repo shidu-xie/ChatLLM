@@ -119,10 +119,10 @@ def get_msg(msg):
     doc = parseString(msg)
     collection = doc.documentElement
     name_xml = collection.getElementsByTagName("FromUserName")
-    msg_dict["userName"] = name_xml.childNodes[0].data
+    msg_dict["userName"] = name_xml[0].childNodes[0].data
 
     time_xml = collection.getElementsByTagName("CreateTime")
-    msg_dict["sendTime"] = time_xml.childNodes[0].data
+    msg_dict["sendTime"] = time_xml[0].childNodes[0].data
 
     type_xml = collection.getElementsByTagName("MsgType")
     msg_type = type_xml[0].childNodes[0].data
@@ -139,7 +139,7 @@ def get_msg(msg):
         msg_xml = collection.getElementsByTagName("Url")
     else: msg_xml = None
 
-    if msg_xml: msg_dict["message"] = msg_xml.childNodes[0].data
+    if msg_xml: msg_dict["message"] = msg_xml[0].childNodes[0].data
 
     return msg_dict
 

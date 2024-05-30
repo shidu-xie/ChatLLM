@@ -15,8 +15,8 @@ class chatBot:
 
         if msg_info["msgType"] == "text":
             if llm_type == "chat":
-                result = choice(self.chatLLMS).reply(msg_info["name"], msg_info["message"])
-                self.app.send_text(result, [msg_info["name"]])
+                result = choice(self.chatLLMS).reply(msg_info["userName"], msg_info["message"])
+                self.app.send_text(result, [msg_info["userName"]])
         else:
             pass
 
@@ -31,4 +31,4 @@ class chatBot:
         #     print(res)
         #     self.app.send_text(res, [name])
 
-print(type("nihao") == str)
+# print(type("nihao") == str)

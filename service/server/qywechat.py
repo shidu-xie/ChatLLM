@@ -30,7 +30,7 @@ async def reply(msg_signature: str, timestamp: str, nonce: str, data: bytes = Bo
         return ("failed")
 
     msg_info = get_msg(sMsg)
-    user_llm_type = user_model.get(msg_info["name"], "chat")
+    user_llm_type = user_model.get(msg_info["userName"], "chat")
 
     # 创建子线程，通过子线程生成回答并回复给用户
     sub_thread = threading.Thread(target=mybot.reply, args=(msg_info, user_llm_type,))
