@@ -6,7 +6,7 @@ os.environ["OPENAI_API_KEY"] = "sk-7af7ba01a1c14dc5b62a8d1d429ddf87"
 
 
 
-class Text2PicLLM:
+class ImageChatLLM:
     def __init__(self, APIKEY):
 
         self.client = OpenAI(

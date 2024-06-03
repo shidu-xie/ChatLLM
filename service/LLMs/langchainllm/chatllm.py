@@ -58,7 +58,7 @@ AI Assistant:"""
 
         self.llm = ChatOpenAI(
             temperature=0.95,
-            model="glm-4",
+            model="qwen-turbo",
             openai_api_key=APIKEY,
             openai_api_base="https://dashscope.aliyuncs.com/compatible-mode/v1"
         )
