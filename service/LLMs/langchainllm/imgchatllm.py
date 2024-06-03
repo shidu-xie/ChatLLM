@@ -1,10 +1,6 @@
 from openai import OpenAI
 import os
-from collections import defaultdict
-os.environ["OPENAI_API_KEY"] = "sk-7af7ba01a1c14dc5b62a8d1d429ddf87"
-
-
-
+from collections import defaultdict, deque
 
 class ImageChatLLM:
     def __init__(self, APIKEY):
@@ -15,20 +11,35 @@ class ImageChatLLM:
         )
         # 存储用户的聊天记录
         self.memory = defaultdict(list)
+        # 存储用户发送的图片
+        self.user_url = defaultdict(deque(maxlen=5))
 
-        self.system = [{"role":"system",
-                        "content": "You are a very smart assistant, capable of accurately understanding images. Please use your intelligence to help those in need."}]
+        self.system = [{'role': 'system',
+                       "content": [{
+                           "type": "text",
+                           "text": "你是一个聪明的小助手，能够准确的认识图片，识别图片的内容。请用你的聪明才智帮助其他人吧"}]}]
 
     def reply(self, userid, content):
 
-        self.memory[userid].append({"role": "user","content": content})
+        if len(self.user_url[userid]) == 0 and len(self.memory[userid]) == 0:
+            return "请先发送图片，再提问吧"
 
+        while len(self.user_url[userid]) > 0:
+            self.memory[userid].append({"role": "user","content": [
+                {"type": "image_url",
+                 "image_url": {"url": self.user_url[userid].get()}},
+            ]})
+        self.memory[userid].append({"role": "user", "content": [
+            {"type": "text", "text": content}
+        ]})
 
         completion = self.client.chat.completions.create(model="qwen-plus", messages= self.system + self.memory[userid])
 
-        result = completion.model_dump_json().choices[0].message.content
+        result = completion.choices[0].message.content[0]["text"]
 
-        self.memory[userid].append({"role":"assistant", "content":result})
+        self.memory[userid].append({"role": "assistant", "content": [
+            {"type": "text", "text": content}
+        ]})
 
         self.delete_memory(userid)
         return result

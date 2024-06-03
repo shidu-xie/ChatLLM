@@ -6,6 +6,7 @@ from config.apiconfig import ZHIPU_APIKEY, Ali_APIKEY
 from random import choice
 import threading
 import os
+from collections import defaultdict, deque
 
 class chatBot:
     def __init__(self):
@@ -17,7 +18,6 @@ class chatBot:
         self.app = Push()
 
         self.user_model = {}
-        self.user_url = {}
         self.user_docs = {}
 
     def reply(self, msg_info):
@@ -60,8 +60,8 @@ class chatBot:
 
         elif msg_info["msgType"] == "image":
             if user_llm_type == "imgchat":
-                # 存储url到对话记忆中
-                self.imagechatLLM.memory[msg_info["userName"]].append({"role":"user", "content":msg_info["message"]})
+                # 存储url到缓存中
+                self.imagechatLLM.user_url[msg_info["userName"]].append(msg_info["message"])
                 return None
         else:
             pass
