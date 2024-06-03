@@ -7,3 +7,9 @@ ZHIPU_APIKEY = [
     "dc4ffbc110fb7c6dcd465f9abedf2489.QAURruuRDWUH6UYs",
     "7243c5ffe1c66ee56d983835fd5fc028.UWVZUoHINig04bNj"
 ]
+
+Ali_APIKEY = [
+    "sk-7af7ba01a1c14dc5b62a8d1d429ddf87",
+    "sk-b853a98ebeb540fb9ab0b60a59f4b1d6",
+    "sk-44941020ee994022a1d69cf1ed46e2ec",
+]
