@@ -23,15 +23,27 @@ class chatBot:
     def reply(self, msg_info):
 
         user_llm_type = self.user_model.get(msg_info["userName"], "alichat")
-
+        print(msg_info["message"])
         if msg_info["msgType"] == "text":
             if msg_info["message"] == "切换模型":
                 self.app.send_text("输入以下指令切换模型：\n1、“智谱”切换智谱清言聊天模型\n2、“通义”切换通义千问聊天模型\n"
                                    "3、“画图”切换文生图模型\n4、“图解”切换图文对话模型\n5、“文档”切换文档对话模型", [msg_info["userName"]])
                 return None
-            elif msg_info["message"] == "画图模型":
+            elif msg_info["message"] == "智谱":
+                self.user_model[msg_info["userName"]] = "zhipuchat"
+                self.app.send_text("已切换到智谱聊天模型，开始聊天吧！\n如输入“喜羊羊是什么羊”", [msg_info["userName"]])
+                return None
+            elif msg_info["message"] == "通义":
+                self.user_model[msg_info["userName"]] = "zhipuchat"
+                self.app.send_text("已切换到阿里通义千问聊天模型，开始聊天吧！\n如输入“喜羊羊是什么羊”", [msg_info["userName"]])
+                return None
+            elif msg_info["message"] == "画图":
                 self.user_model[msg_info["userName"]] = "plot"
                 self.app.send_text("已切换到画图模型，开始画画吧！\n如输入“帮我画一只喜羊羊”", [msg_info["userName"]])
+                return None
+            elif msg_info["message"] == "图解":
+                self.user_model[msg_info["userName"]] = "zhipuchat"
+                self.app.send_text("已切换到图文对话模型，开始聊天吧！\n请先发送图片吧", [msg_info["userName"]])
                 return None
 
             if user_llm_type == "alichat":
