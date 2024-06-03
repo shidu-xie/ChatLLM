@@ -34,7 +34,7 @@ AI Assistant:"""
         )
 
         conversation = ConversationChain(
-            prompt=ChatLLM.PROMPT,
+            prompt=zhipuChatLLM.PROMPT,
             llm=self.llm,
             verbose=True,
             memory=memory,
@@ -73,7 +73,7 @@ AI Assistant:"""
         )
 
         conversation = ConversationChain(
-            prompt=ChatLLM.PROMPT,
+            prompt=aliChatLLM.PROMPT,
             llm=self.llm,
             verbose=True,
             memory=memory,
