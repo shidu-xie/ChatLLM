@@ -13,3 +13,5 @@ Ali_APIKEY = [
     "sk-b853a98ebeb540fb9ab0b60a59f4b1d6",
     "sk-44941020ee994022a1d69cf1ed46e2ec",
 ]
+
+FIGURE_PATH = "/root/ChatLLM/TEMP"

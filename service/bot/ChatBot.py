@@ -1,8 +1,8 @@
 from service.utils.qywxTools import Push
 from service.LLMs.langchainllm.chatllm import zhipuChatLLM, aliChatLLM
 from service.LLMs.langchainllm.imgchatllm import ImageChatLLM
-
-from config.apiconfig import ZHIPU_APIKEY, Ali_APIKEY
+from service.LLMs.langchainllm.text2img import simple_call
+from config.apiconfig import ZHIPU_APIKEY, Ali_APIKEY, FIGURE_PATH
 from random import choice
 import threading
 import os
@@ -38,7 +38,7 @@ class chatBot:
                 self.app.send_text("已切换到阿里通义千问聊天模型，开始聊天吧！\n如输入“喜羊羊是什么羊”", [msg_info["userName"]])
                 return None
             elif msg_info["message"] == "画图":
-                self.user_model[msg_info["userName"]] = "plot"
+                self.user_model[msg_info["userName"]] = "text2pic"
                 self.app.send_text("已切换到画图模型，开始画画吧！\n如输入“帮我画一只喜羊羊”", [msg_info["userName"]])
                 return None
             elif msg_info["message"] == "图解":
@@ -53,7 +53,13 @@ class chatBot:
                 result = choice(self.zhipuchatLLMS).reply(msg_info["userName"], msg_info["message"])
                 self.app.send_text(result, [msg_info["userName"]])
             elif user_llm_type == "text2pic":
-                pass
+                self.app.send_text("画图需要一点时间（约30s），请稍等", [msg_info["userName"]])
+                res = simple_call(msg_info["message"], choice(Ali_APIKEY), msg_info["userName"])
+                if res == "Finish":
+                    self.app.send_img(FIGURE_PATH, f"{msg_info['userName']}.png", [msg_info["userName"]])
+                else:
+                    self.app.send_text(res, [msg_info["userName"]])
+
             elif user_llm_type == "imgchat":
                 result = self.imagechatLLM.reply(msg_info["userName"], msg_info["message"])
                 self.app.send_text(result, [msg_info["userName"]])

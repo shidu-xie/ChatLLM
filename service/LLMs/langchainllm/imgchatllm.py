@@ -12,7 +12,7 @@ class ImageChatLLM:
         # 存储用户的聊天记录
         self.memory = defaultdict(list)
         # 存储用户发送的图片
-        self.user_url = defaultdict(deque(maxlen=5))
+        self.user_url = defaultdict(deque)
 
         self.system = [{'role': 'system',
                        "content": [{
@@ -27,13 +27,13 @@ class ImageChatLLM:
         while len(self.user_url[userid]) > 0:
             self.memory[userid].append({"role": "user","content": [
                 {"type": "image_url",
-                 "image_url": {"url": self.user_url[userid].get()}},
+                 "image_url": {"url": self.user_url[userid].popleft()}},
             ]})
         self.memory[userid].append({"role": "user", "content": [
             {"type": "text", "text": content}
         ]})
 
-        completion = self.client.chat.completions.create(model="qwen-plus", messages= self.system + self.memory[userid])
+        completion = self.client.chat.completions.create(model="qwen-vl-plus", messages= self.system + self.memory[userid])
 
         result = completion.choices[0].message.content[0]["text"]
 
