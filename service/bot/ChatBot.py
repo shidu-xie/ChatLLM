@@ -2,6 +2,7 @@ from service.utils.qywxTools import Push
 from service.LLMs.langchainllm.chatllm import zhipuChatLLM, aliChatLLM
 from service.LLMs.langchainllm.imgchatllm import ImageChatLLM
 from service.LLMs.langchainllm.text2img import simple_call
+from service.LLMs.langchainllm.lawchat import LawChatLLM
 from config.apiconfig import ZHIPU_APIKEY, Ali_APIKEY, FIGURE_PATH
 from random import choice
 import threading
@@ -15,6 +16,8 @@ class chatBot:
 
         self.imagechatLLM = ImageChatLLM(Ali_APIKEY[0])
 
+        self.lawchatLLM = LawChatLLM()
+
         self.app = Push()
 
         self.user_model = {}
@@ -27,7 +30,8 @@ class chatBot:
         if msg_info["msgType"] == "text":
             if msg_info["message"] == "切换模型":
                 self.app.send_text("输入以下指令切换模型：\n1、“智谱”切换智谱清言聊天模型\n2、“通义”切换通义千问聊天模型\n"
-                                   "3、“画图”切换文生图模型\n4、“图解”切换图文对话模型\n5、“文档”切换文档对话模型", [msg_info["userName"]])
+                                   "3、“画图”切换文生图模型\n4、“图解”切换图文对话模型\n5、“文档”切换文档对话模型"
+                                   "\n6、“法律”切换法律大模型", [msg_info["userName"]])
                 return None
             elif msg_info["message"] == "智谱":
                 self.user_model[msg_info["userName"]] = "zhipuchat"
@@ -45,6 +49,11 @@ class chatBot:
                 self.user_model[msg_info["userName"]] = "imgchat"
                 self.app.send_text("已切换到图文对话模型，开始聊天吧！\n请先发送图片吧", [msg_info["userName"]])
                 return None
+            elif msg_info["message"] == "法律":
+                self.user_model[msg_info["userName"]] = "lawchat"
+                self.app.send_text("已切换到法律大模型，有什么问题都可以提问哟", [msg_info["userName"]])
+                return None
+
 
             if user_llm_type == "alichat":
                 result = choice(self.alichatLLMS).reply(msg_info["userName"], msg_info["message"])
@@ -62,6 +71,9 @@ class chatBot:
 
             elif user_llm_type == "imgchat":
                 result = self.imagechatLLM.reply(msg_info["userName"], msg_info["message"])
+                self.app.send_text(result, [msg_info["userName"]])
+            elif user_llm_type == "lawchat":
+                result = self.lawchatLLM.reply(msg_info["userName"], msg_info["message"], choice(Ali_APIKEY))
                 self.app.send_text(result, [msg_info["userName"]])
 
         elif msg_info["msgType"] == "image":
